@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 public class AmqpAnnotatedMessageJavaDocCodeSamples {
     /**
      * Get message body from {@link AmqpAnnotatedMessage}.
+     * This is a test change - to be removed
      */
     @Test
     public void checkBodyType() {
