@@ -751,7 +751,7 @@ public final class ServiceBusReceiverClient implements AutoCloseable {
         if (!syncSubscribed.getAndSet(true)) {
             // The 'subscribeWith' has side effects hence must not be called from
             // the above updateFunction of AtomicReference::updateAndGet.
-            asyncClient.receiveNoBackPressure().subscribeWith(messageSubscriber);
+            asyncClient.receiveNoBackPressure().subscribeWith(newSubscriber);
         } else {
             messageSubscriber.queueWork(work);
         }
