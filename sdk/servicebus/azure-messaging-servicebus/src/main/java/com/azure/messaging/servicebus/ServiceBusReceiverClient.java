@@ -568,7 +568,9 @@ public final class ServiceBusReceiverClient implements AutoCloseable {
      * @throws IllegalStateException if the receiver is a session receiver or the receiver is disposed.
      * @throws IllegalArgumentException if {@code message.getLockToken()} is an empty value.
      * @throws ServiceBusException If the message cannot be renewed.
+     * @deprecated auto lock renewal should not be supported through the basic receiver client
      */
+    @Deprecated
     public void renewMessageLock(ServiceBusReceivedMessage message, Duration maxLockRenewalDuration,
         Consumer<Throwable> onError) {
         final String lockToken = message != null ? message.getLockToken() : "null";
@@ -737,7 +739,7 @@ public final class ServiceBusReceiverClient implements AutoCloseable {
         // If users do not iterate through the stream and their lock duration expires, it is possible that the
         // Service Bus message's delivery count will be incremented.
         if (synchronousMessageSubscriber.compareAndSet(null, newSubscriber)) {
-            asyncClient.receiveMessagesNoBackPressure().subscribeWith(newSubscriber);
+            asyncClient.receiveNoBackPressure().subscribeWith(newSubscriber);
         } else {
             newSubscriber.dispose();
             synchronousMessageSubscriber.get().queueWork(work);
