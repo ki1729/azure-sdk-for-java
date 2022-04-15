@@ -158,9 +158,6 @@ public final class ServiceBusSessionReceiverAsyncClient implements AutoCloseable
      */
     @ServiceMethod(returns = ReturnType.SINGLE)
     public Mono<ServiceBusReceiverAsyncClient> acceptSession(String sessionId) {
-        if (sessionId == null) {
-            return monoError(logger, new NullPointerException("'sessionId' cannot be null"));
-        }
         if (CoreUtils.isNullOrEmpty(sessionId)) {
             return monoError(logger, new IllegalArgumentException("'sessionId' cannot be empty"));
         }
